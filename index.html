@@ -2,880 +2,201 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mahat Joshi — Computer Engineering, GNC-Focused</title>
-<meta name="description" content="Mahat Joshi — Computer Engineering student at the University of Toronto. Astrodynamics, real-time embedded systems, control theory, and analog/digital hardware, built with independent cross-validation at every layer.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23101c26'/%3E%3Ccircle cx='32' cy='68' r='7' fill='%23cb9736'/%3E%3Ccircle cx='72' cy='30' r='11' fill='none' stroke='%232f8f86' stroke-width='4'/%3E%3Cline x1='38' y1='62' x2='63' y2='38' stroke='%23dce6e2' stroke-width='3' stroke-dasharray='2 5' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-  :root{
-    --ink:        #101c26;
-    --panel:      #16242f;
-    --panel-2:    #1c2e3a;
-    --paper:      #ece7d8;
-    --paper-2:    #e2dcc8;
-    --ink-on-paper: #21231d;
-    --muted-on-paper: #5b5646;
-
-    --brass:      #cb9736;
-    --brass-deep: #8c5f16;
-    --teal:       #3fa89c;
-    --teal-deep:  #1f6b62;
-
-    --text-hi:    #eef2f0;
-    --text-lo:    #a9b7bb;
-    --text-faint: #6d7d81;
-
-    --line:       rgba(238,242,240,0.14);
-    --line-soft:  rgba(238,242,240,0.08);
-
-    --display: 'Fraunces', ui-serif, Georgia, serif;
-    --body: 'IBM Plex Sans', -apple-system, sans-serif;
-    --mono: 'IBM Plex Mono', ui-monospace, monospace;
-
-    --container: 1120px;
-  }
-
-  *,*::before,*::after{ box-sizing:border-box; }
-  html{ scroll-behavior:smooth; }
-  body{
-    margin:0;
-    background:var(--ink);
-    color:var(--text-hi);
-    font-family:var(--body);
-    font-size:16px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3,h4{ margin:0; font-family:var(--display); font-weight:500; }
-  p{ margin:0; }
-  a{ color:inherit; }
-  ul{ margin:0; padding:0; list-style:none; }
-  button{ font:inherit; color:inherit; background:none; border:none; cursor:pointer; }
-  img,svg{ display:block; max-width:100%; }
-
-  :focus-visible{ outline:2px solid var(--brass); outline-offset:3px; border-radius:2px; }
-
-  .wrap{ max-width:var(--container); margin:0 auto; padding:0 28px; }
-
-  .skip-link{
-    position:absolute; left:-999px; top:0; background:var(--brass); color:var(--ink);
-    padding:10px 16px; z-index:200; font-family:var(--mono); font-size:13px; font-weight:600;
-  }
-  .skip-link:focus{ left:12px; top:12px; }
-
-  section{ position:relative; }
-  .on-console{ background:var(--ink); color:var(--text-hi); }
-  .on-paper{ background:var(--paper); color:var(--ink-on-paper); }
-
-  .eyebrow{
-    font-family:var(--mono); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
-    display:inline-flex; align-items:center; gap:9px;
-  }
-  .on-console .eyebrow{ color:var(--brass); }
-  .on-paper .eyebrow{ color:var(--brass-deep); }
-  .eyebrow::before{ content:''; width:16px; height:1px; background:currentColor; display:inline-block; }
-
-  header.site-nav{
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    background:rgba(16,28,38,0.86); backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line-soft);
-  }
-  .nav-row{
-    max-width:var(--container); margin:0 auto; padding:14px 28px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .nav-mark{ display:flex; align-items:center; gap:10px; text-decoration:none; }
-  .nav-mark span{ font-family:var(--mono); font-weight:600; font-size:14.5px; letter-spacing:.03em; color:var(--text-hi); }
-  .nav-links{ display:flex; align-items:center; gap:30px; }
-  .nav-links a{
-    font-family:var(--mono); font-size:13px; letter-spacing:.04em; text-transform:uppercase;
-    text-decoration:none; color:var(--text-lo); padding:6px 2px; position:relative;
-  }
-  .nav-links a::after{
-    content:''; position:absolute; left:0; right:100%; bottom:0; height:1px; background:var(--brass);
-    transition:right .25s ease;
-  }
-  .nav-links a:hover, .nav-links a.active{ color:var(--text-hi); }
-  .nav-links a:hover::after, .nav-links a.active::after{ right:0; }
-  .nav-cta{
-    font-family:var(--mono); font-size:12.5px; letter-spacing:.04em; text-transform:uppercase;
-    color:var(--ink); background:var(--brass); padding:8px 14px; border-radius:3px; text-decoration:none;
-    white-space:nowrap;
-  }
-  .nav-cta:hover{ background:#e0ac48; }
-  .nav-toggle{ display:none; }
-
-  @media (max-width:840px){
-    .nav-links{
-      position:fixed; inset:56px 0 0 0; background:var(--ink); flex-direction:column; justify-content:flex-start;
-      padding:34px 28px; gap:22px; transform:translateX(100%); transition:transform .3s ease; overflow-y:auto;
-    }
-    .nav-links.open{ transform:translateX(0); }
-    .nav-links a{ font-size:16px; }
-    .nav-cta{ margin-top:6px; align-self:flex-start; }
-    .nav-toggle{
-      display:flex; flex-direction:column; justify-content:center; gap:5px; width:30px; height:22px; z-index:110;
-    }
-    .nav-toggle span{ display:block; height:2px; background:var(--text-hi); border-radius:2px; transition:.25s ease; }
-    .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
-    .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity:0; }
-    .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
-  }
-  @media (min-width:841px){ .nav-toggle{ display:none; } }
-
-  .hero{
-    padding:168px 0 96px;
-    overflow:hidden;
-    background:
-      radial-gradient(ellipse 900px 500px at 82% -10%, rgba(63,168,156,0.14), transparent 60%),
-      radial-gradient(ellipse 700px 500px at -10% 90%, rgba(203,151,54,0.10), transparent 60%),
-      var(--ink);
-  }
-  .starfield{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
-  .starfield span{
-    position:absolute; width:2px; height:2px; background:var(--text-hi); border-radius:50%; opacity:.35;
-    animation:twinkle 4.5s ease-in-out infinite;
-  }
-  @keyframes twinkle{ 0%,100%{opacity:.15;} 50%{opacity:.65;} }
-
-  .hero-grid{
-    position:relative; z-index:1;
-    max-width:640px;
-  }
-  .hero h1{
-    font-size:clamp(2.6rem, 5.6vw, 4.2rem); line-height:1.03; margin:16px 0 20px; color:var(--text-hi);
-    letter-spacing:-.01em;
-  }
-  .hero h1 em{ font-style:italic; color:var(--teal); }
-  .hero-lede{ font-size:1.1rem; color:var(--text-lo); max-width:46ch; margin-bottom:30px; }
-  .hero-lede strong{ color:var(--text-hi); font-weight:600; }
-
-  .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:38px; }
-  .btn{
-    display:inline-flex; align-items:center; gap:9px; padding:12px 20px; border-radius:4px;
-    font-family:var(--mono); font-size:13.5px; letter-spacing:.03em; text-decoration:none; text-transform:uppercase;
-    transition:transform .15s ease, background .15s ease, border-color .15s ease;
-  }
-  .btn-primary{ background:var(--brass); color:var(--ink); }
-  .btn-primary:hover{ background:#e0ac48; transform:translateY(-1px); }
-  .btn-ghost{ border:1px solid var(--line); color:var(--text-hi); }
-  .btn-ghost:hover{ border-color:var(--brass); color:var(--brass); transform:translateY(-1px); }
-
-  .hero-meta{ display:flex; gap:28px; flex-wrap:wrap; }
-  .hero-meta div{ font-family:var(--mono); font-size:12px; color:var(--text-faint); letter-spacing:.02em; }
-  .hero-meta b{ display:block; color:var(--text-hi); font-size:14px; margin-bottom:2px; font-weight:600; }
-
-  .widget{
-    background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:26px 22px 22px;
-    position:relative;
-  }
-  .widget-label{ font-family:var(--mono); font-size:11.5px; color:var(--text-faint); letter-spacing:.08em; text-transform:uppercase; margin-bottom:18px; }
-  .orbit-stage{ position:relative; width:100%; max-width:230px; aspect-ratio:1/1; margin:0 auto; }
-  .orbit-ring{ position:absolute; inset:0; border:1px dashed rgba(238,242,240,0.18); border-radius:50%; }
-  .orbit-ring.inner{ inset:34px; border-color:rgba(238,242,240,0.10); }
-  .pivot{ position:absolute; inset:0; animation:spin linear infinite; }
-  .pivot.a{ animation-duration:6s; }
-  .pivot.b{ animation-duration:6.55s; }
-  .dot{ position:absolute; top:0; left:50%; width:11px; height:11px; margin-left:-5.5px; border-radius:50%; }
-  .pivot.a .dot{ background:var(--teal); box-shadow:0 0 10px rgba(63,168,156,.8); }
-  .pivot.b .dot{ background:var(--brass); box-shadow:0 0 10px rgba(203,151,54,.8); }
-  @keyframes spin{ to{ transform:rotate(360deg); } }
-  .orbit-center{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
-  .orbit-readout{ font-family:var(--mono); font-size:1.55rem; font-weight:600; color:var(--text-hi); }
-  .orbit-readout span{ color:var(--teal); }
-  .orbit-sub{ font-family:var(--mono); font-size:10px; color:var(--text-faint); margin-top:4px; letter-spacing:.03em; }
-  .widget-caption{
-    margin-top:18px; padding-top:14px; border-top:1px solid var(--line-soft);
-    font-size:13px; color:var(--text-lo); text-align:center;
-  }
-  .widget-caption em{ display:block; margin-top:4px; font-size:11px; color:var(--text-faint); font-style:normal; }
-
-  @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } .widget{ max-width:340px; margin:0 auto; } }
-
-  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
-  .reveal.in{ opacity:1; transform:none; }
-  @media (prefers-reduced-motion:reduce){
-    html{ scroll-behavior:auto; }
-    .reveal{ opacity:1; transform:none; transition:none; }
-    .pivot, .starfield span{ animation:none !important; }
-  }
-
-  .about-scroll{ position:relative; min-height:230vh; overflow:hidden; }
-  .about-bg{
-    position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:flex-end;
-    pointer-events:none; z-index:0;
-  }
-  .about-rocket{ width:min(24vw,230px); height:auto; margin-right:7vw; opacity:.9; }
-  .about-rocket .stage-outline{ fill:none; stroke:var(--brass-deep); stroke-width:1.3; stroke-linejoin:round; }
-  .about-rocket .stage-fill{ fill:var(--brass-deep); }
-  .about-rocket .engine{ fill:none; stroke:var(--muted-on-paper); stroke-width:.9; }
-  .about-rocket .lm-glyph path{ fill:none; stroke:var(--teal-deep); stroke-width:1; }
-  .about-rocket .lm-glyph circle{ fill:none; stroke:var(--teal-deep); stroke-width:1; }
-  @media (max-width:840px){ .about-bg{ display:none; } .about-scroll{ min-height:0; } }
-
-  .about-fg{ position:relative; z-index:1; padding:150px 28px 170px; }
-  .about-panel{
-    background:rgba(236,231,216,0.94); border-radius:10px; padding:38px 40px 32px; max-width:920px;
-  }
-  .log-head{ display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:26px; padding-bottom:18px; border-bottom:1px solid var(--paper-2); }
-  .log-head h2{ font-size:1.9rem; color:var(--ink-on-paper); }
-  .log-body{ display:grid; grid-template-columns:1.5fr 1fr; gap:52px; }
-  .log-body p{ font-size:1.06rem; margin-bottom:18px; color:#312e22; max-width:62ch; }
-  .log-body p:last-child{ margin-bottom:0; }
-  .log-body strong{ color:var(--ink-on-paper); }
-  .pull-card{
-    background:var(--paper-2); border-left:3px solid var(--brass-deep); padding:20px 22px; border-radius:2px;
-    align-self:start;
-  }
-  .pull-card p{ font-family:var(--display); font-style:italic; font-size:1.08rem; line-height:1.5; color:#2a281e; margin-bottom:10px; }
-  .pull-card cite{ font-family:var(--mono); font-size:11.5px; color:var(--muted-on-paper); font-style:normal; }
-  @media (max-width:840px){ .log-body{ grid-template-columns:1fr; } .about-panel{ padding:28px 24px; } }
-
-  .stats{ padding:70px 0; border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); }
-  .stats-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
-  .stat{ padding:0 24px; border-left:1px solid var(--line-soft); }
-  .stat:first-child{ border-left:none; padding-left:0; }
-  .stat-num{ font-family:var(--mono); font-size:2.3rem; font-weight:600; color:var(--teal); letter-spacing:-.01em; }
-  .stat-label{ font-size:13px; color:var(--text-lo); margin-top:6px; line-height:1.45; }
-  @media (max-width:840px){
-    .stats-grid{ grid-template-columns:repeat(2,1fr); row-gap:32px; }
-    .stat:nth-child(3){ border-left:none; padding-left:0; }
-  }
-
-  .projects{ padding:96px 0; }
-  .section-head{ max-width:640px; margin-bottom:48px; }
-  .section-head h2{ font-size:2.1rem; margin:14px 0 12px; color:var(--text-hi); }
-  .section-head p{ color:var(--text-lo); font-size:1.02rem; }
-
-  .case-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-  .case{
-    background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:26px 26px 22px;
-    transition:border-color .2s ease, transform .2s ease;
-  }
-  .case:hover{ border-color:var(--panel-2); }
-  .case-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-bottom:10px; }
-  .case-tag{
-    font-family:var(--mono); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--brass);
-    border:1px solid rgba(203,151,54,.35); padding:3px 8px; border-radius:3px; white-space:nowrap;
-  }
-  .case h3{ font-size:1.22rem; color:var(--text-hi); line-height:1.3; margin-bottom:4px; }
-  .case-when{ font-family:var(--mono); font-size:11.5px; color:var(--text-faint); }
-  .case-stack{ font-size:12.5px; color:var(--teal); margin:12px 0 14px; font-family:var(--mono); }
-  .case-lede{ color:var(--text-lo); font-size:14.5px; margin-bottom:14px; }
-
-  .case-details{
-    display:grid; grid-template-rows:0fr; transition:grid-template-rows .35s ease;
-  }
-  .case-details.open{ grid-template-rows:1fr; }
-  .case-details-inner{ overflow:hidden; }
-  .case ul{ padding-top:6px; margin-bottom:6px; }
-  .case li{
-    font-size:14px; color:var(--text-lo); padding-left:16px; position:relative; margin-bottom:9px; line-height:1.55;
-  }
-  .case li::before{ content:'→'; position:absolute; left:0; color:var(--teal); font-size:12px; top:2px; }
-
-  .case-toggle{
-    display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:12px;
-    color:var(--brass); letter-spacing:.03em; text-transform:uppercase; margin-top:4px;
-  }
-  .case-toggle svg{ width:11px; height:11px; transition:transform .25s ease; }
-  .case-toggle[aria-expanded="true"] svg{ transform:rotate(180deg); }
-
-  @media (max-width:840px){ .case-grid{ grid-template-columns:1fr; } }
-
-  .skills{ padding:92px 0; }
-  .skill-groups{ display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:44px; }
-  .skill-group h4{
-    font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--brass);
-    margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--line-soft);
-  }
-  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
-  .chip{
-    font-family:var(--mono); font-size:12.5px; color:var(--text-lo); border:1px solid var(--line);
-    padding:6px 11px; border-radius:20px; background:var(--panel);
-  }
-  @media (max-width:840px){ .skill-groups{ grid-template-columns:1fr; gap:36px; } }
-
-  .contact{ padding:100px 0 60px; text-align:center; border-top:1px solid var(--line-soft); }
-  .contact h2{ font-size:2.4rem; max-width:16ch; margin:16px auto 18px; color:var(--text-hi); }
-  .contact p{ color:var(--text-lo); max-width:52ch; margin:0 auto 34px; font-size:1.05rem; }
-  .contact-actions{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-bottom:52px; }
-  .copy-note{ font-family:var(--mono); font-size:11.5px; color:var(--teal); height:16px; margin-top:10px; }
-
-  footer{ padding:26px 0 40px; border-top:1px solid var(--line-soft); }
-  .foot-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
-  .foot-row p{ font-family:var(--mono); font-size:11.5px; color:var(--text-faint); }
-  .foot-links{ display:flex; gap:22px; }
-  .foot-links a{ font-family:var(--mono); font-size:11.5px; color:var(--text-faint); text-decoration:none; }
-  .foot-links a:hover{ color:var(--brass); }
-</style>
-<noscript>
-  <style>.reveal{opacity:1 !important; transform:none !important;}</style>
-</noscript>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mahat Joshi — Computer Engineering, GNC &amp; Control Systems</title>
+<meta name="description" content="Mahat Joshi — Computer Engineering student at the University of Toronto, working on astrodynamics and GNC flight software.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%23E3A548'/%3E%3Cellipse cx='50' cy='50' rx='42' ry='22' fill='none' stroke='%235FA8C4' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="#top" class="nav-mark">mahat<span>·</span>joshi</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#spacenet">Spacenet</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#resume">Resume</a></li>
+    </ul>
+  </div>
+</nav>
 
-<header class="site-nav">
-  <div class="nav-row">
-    <a href="#top" class="nav-mark" aria-label="Mahat Joshi, home">
-      <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true">
-        <rect width="100" height="100" rx="20" fill="#16242f"/>
-        <circle cx="32" cy="68" r="7" fill="#cb9736"/>
-        <circle cx="72" cy="30" r="11" fill="none" stroke="#3fa89c" stroke-width="4"/>
-        <line x1="38" y1="62" x2="63" y2="38" stroke="#eef2f0" stroke-width="3" stroke-dasharray="2 5" stroke-linecap="round"/>
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow-line">Toronto, ON — University of Toronto, Computer Engineering</p>
+      <h1>Reference vectors for<br>satellites in orbit, and<br>the control loops <em>around</em> them.</h1>
+      <p class="lede">I build astrodynamics and GNC software — the kind that tells a satellite where the sun is, where magnetic north is, and what to do about it. Currently a 3rd-year Computer Engineering student, working toward flight software and control systems.</p>
+      <div class="hero-links">
+        <a class="btn" href="files/mahat-joshi-resume.pdf">Download résumé</a>
+        <a class="text-link" href="https://github.com/MahatPhy">GitHub ↗</a>
+        <a class="text-link" href="https://www.linkedin.com/in/mahat-joshi/">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="hero-diagram" aria-hidden="true">
+      <svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow-gold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#E3A548"/>
+          </marker>
+          <marker id="arrow-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#5FA8C4"/>
+          </marker>
+        </defs>
+
+        <!-- orbit path -->
+        <path d="M 60,210 C 60,120 340,120 340,210 C 340,300 60,300 60,210"
+              fill="none" stroke="#232B38" stroke-width="1.5"/>
+
+        <!-- earth -->
+        <circle cx="200" cy="210" r="34" fill="#141B26" stroke="#5B6472" stroke-width="1"/>
+        <ellipse cx="200" cy="210" rx="34" ry="12" fill="none" stroke="#232B38" stroke-width="1"/>
+        <ellipse cx="200" cy="210" rx="34" ry="22" fill="none" stroke="#232B38" stroke-width="1"/>
+
+        <!-- traveling satellite (ambient motion) -->
+        <circle class="sat-dot" r="3" fill="#5FA8C4" opacity="0.55"/>
+
+        <!-- reference satellite point + vectors -->
+        <circle cx="300" cy="145" r="4.5" fill="#0A0E14" stroke="#E7E4DA" stroke-width="1.5"/>
+
+        <line x1="300" y1="145" x2="372" y2="82" stroke="#E3A548" stroke-width="1.75" marker-end="url(#arrow-gold)"/>
+        <text x="330" y="72" class="vec-label" fill="#E3A548">sun vector</text>
+
+        <line x1="300" y1="145" x2="252" y2="46" stroke="#5FA8C4" stroke-width="1.75" marker-end="url(#arrow-cyan)"/>
+        <text x="150" y="42" class="vec-label" fill="#5FA8C4">B (IGRF-14)</text>
+
+        <text x="60" y="330" class="vec-label" fill="#5B6472">ECEF / ITRF frame</text>
       </svg>
-      <span>MAHAT JOSHI</span>
-    </a>
-    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
-    <nav id="navLinks" class="nav-links" aria-label="Primary">
-      <a href="#about" data-section>About</a>
-      <a href="#projects" data-section>Projects</a>
-      <a href="#skills" data-section>Skills</a>
-      <a href="#contact" data-section>Contact</a>
-      <a href="./resume.pdf" class="nav-cta">Résumé ↓</a>
-    </nav>
+    </div>
   </div>
 </header>
 
-<main id="main">
-
-  <section class="hero" id="top">
-    <div class="starfield" id="starfield" aria-hidden="true"></div>
-    <div class="wrap hero-grid">
-      <div>
-        <p class="eyebrow">Computer Engineering · University of Toronto · PEY Co-op</p>
-        <div class="hero-actions" style="margin-top:22px;">
-          <a href="#projects" class="btn btn-primary">View the work</a>
-          <a href="./resume.pdf" class="btn btn-ghost">Download résumé</a>
-        </div>
-        <div class="hero-meta">
-          <div><b>Toronto, ON</b>Open to GNC / flight-software co-op roles</div>
-          <div><b>github.com/MahatPhy</b>Public repos, dev logs included</div>
-        </div>
-      </div>
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">About</h2>
+      <span class="section-tag">background</span>
     </div>
-  </section>
-
-  <section class="on-paper about-scroll" id="about">
-    <div class="about-bg" aria-hidden="true">
-      <svg class="about-rocket" id="aboutRocket" viewBox="0 0 260 950" xmlns="http://www.w3.org/2000/svg">
-        <g class="stage" data-stage="s-ic">
-          <path class="stage-fill" d="M84,660 L176,660 L176,860 L84,860 Z"/>
-          <path class="stage-outline draw" d="M84,660 L176,660 L176,860 L84,860 Z"/>
-          <path class="stage-fill" d="M84,820 L50,870 L84,860 Z"/>
-          <path class="stage-outline draw" d="M84,820 L50,870 L84,860 Z"/>
-          <path class="stage-fill" d="M176,820 L210,870 L176,860 Z"/>
-          <path class="stage-outline draw" d="M176,820 L210,870 L176,860 Z"/>
-        </g>
-        <g class="engines" data-engines="s-ic">
-          <path class="engine" d="M92,860 L100,860 L103,900 L89,900 Z"/>
-          <path class="engine" d="M110,860 L118,860 L120,895 L108,895 Z"/>
-          <path class="engine" d="M126,860 L134,860 L136,900 L124,900 Z"/>
-          <path class="engine" d="M142,860 L150,860 L152,895 L140,895 Z"/>
-          <path class="engine" d="M160,860 L168,860 L171,900 L157,900 Z"/>
-        </g>
-        <g class="stage" data-stage="s-ii">
-          <path class="stage-fill" d="M86,630 L174,630 L176,660 L84,660 Z"/>
-          <path class="stage-outline draw" d="M86,630 L174,630 L176,660 L84,660 Z"/>
-          <path class="stage-fill" d="M86,450 L174,450 L174,630 L86,630 Z"/>
-          <path class="stage-outline draw" d="M86,450 L174,450 L174,630 L86,630 Z"/>
-        </g>
-        <g class="engines" data-engines="s-ii">
-          <path class="engine" d="M100,630 L106,630 L108,655 L98,655 Z"/>
-          <path class="engine" d="M114,630 L120,630 L122,650 L112,650 Z"/>
-          <path class="engine" d="M127,630 L133,630 L135,655 L125,655 Z"/>
-          <path class="engine" d="M140,630 L146,630 L148,650 L138,650 Z"/>
-          <path class="engine" d="M154,630 L160,630 L162,655 L152,655 Z"/>
-        </g>
-        <g class="stage" data-stage="s-ivb">
-          <path class="stage-fill" d="M100,430 L160,430 L174,450 L86,450 Z"/>
-          <path class="stage-outline draw" d="M100,430 L160,430 L174,450 L86,450 Z"/>
-          <path class="stage-fill" d="M100,360 L160,360 L160,430 L100,430 Z"/>
-          <path class="stage-outline draw" d="M100,360 L160,360 L160,430 L100,430 Z"/>
-        </g>
-        <g class="engines" data-engines="s-ivb">
-          <path class="engine" d="M124,430 L136,430 L139,458 L121,458 Z"/>
-        </g>
-        <g class="stage" data-stage="iu">
-          <path class="stage-fill" d="M100,345 L160,345 L160,360 L100,360 Z"/>
-          <path class="stage-outline draw" d="M100,345 L160,345 L160,360 L100,360 Z"/>
-        </g>
-        <g class="stage" data-stage="sla">
-          <path class="stage-fill" d="M112,260 L148,260 L160,345 L100,345 Z"/>
-          <path class="stage-outline draw" d="M112,260 L148,260 L160,345 L100,345 Z"/>
-        </g>
-        <g class="lm-glyph" data-lm="true">
-          <path d="M118,290 L142,290 L138,308 L122,308 Z"/>
-          <path d="M124,278 L136,278 L134,290 L126,290 Z"/>
-          <circle cx="127" cy="283" r="1.6"/>
-          <circle cx="133" cy="283" r="1.6"/>
-          <path d="M118,308 L108,320 M142,308 L152,320 M122,308 L114,322 M138,308 L146,322"/>
-        </g>
-        <g class="stage" data-stage="sm">
-          <path class="stage-fill" d="M112,170 L148,170 L148,260 L112,260 Z"/>
-          <path class="stage-outline draw" d="M112,170 L148,170 L148,260 L112,260 Z"/>
-          <path class="stage-fill" d="M122,260 L138,260 L134,280 L126,280 Z"/>
-          <path class="stage-outline draw" d="M122,260 L138,260 L134,280 L126,280 Z"/>
-        </g>
-        <g class="stage" data-stage="cm">
-          <path class="stage-fill" d="M121,110 L139,110 L148,170 L112,170 Z"/>
-          <path class="stage-outline draw" d="M121,110 L139,110 L148,170 L112,170 Z"/>
-        </g>
-        <g class="stage" data-stage="les">
-          <path class="stage-fill" d="M127,60 L130,40 L133,60 L133,110 L127,110 Z"/>
-          <path class="stage-outline draw" d="M127,60 L130,40 L133,60 L133,110 L127,110 Z"/>
-        </g>
-      </svg>
-    </div>
-
-    <div class="wrap reveal about-fg">
-      <div class="about-panel">
-        <div class="log-head">
-          <h2>About</h2>
-        </div>
-        <div class="log-body">
-          <div>
-            <p>
-              I'm working toward a career building guidance, navigation, and control software for
-              spacecraft.
-            </p>
-            <p>
-              I read NASA's Apollo-era guidance and navigation papers and the X-15 aerodynamics
-              reports because they're some of the clearest records available of solving hard
-              problems under real constraints. I hold my own work to a similar standard: build the
-              simplest version that is correct, verify it independently, then move to the next
-              piece.
-            </p>
-            <p>
-              I don't rely on jargon. If I can't explain a system in plain language, I don't
-              understand it well enough yet, and I would rather find that out early than after
-              something ships. I work in steps large enough to matter and small enough that I don't
-              lose track of what I'm building or why.
-            </p>
-          </div>
-          <div class="pull-card">
-            <p>"If I can't explain what I built in plain language, I don't understand it well enough yet."</p>
-            <cite>— working principle</cite>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="on-console projects" id="projects">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">Case files</p>
-        <h2>Projects, in the order I'd defend them</h2>
-        <p>Six projects, spanning transistors to Python — each one built, then independently checked.
-          Click any card for the full technical detail.</p>
-      </div>
-
-      <div class="case-grid">
-
-        <article class="case reveal">
-          <div class="case-top">
-            <div>
-              <h3>SpaceNet</h3>
-              <div class="case-when">2026 — present · Independent, for supervisor Khang Nguyen</div>
-            </div>
-            <span class="case-tag">Astrodynamics</span>
-          </div>
-          <p class="case-stack">C++ · Python (pybind11) · SOFA · CMake · GitHub Actions</p>
-          <p class="case-lede">A satellite sun-vector library with two independently coded reference-frame
-            transformation chains, built specifically so they could argue with each other.</p>
-          <div class="case-details">
-            <div class="case-details-inner">
-              <ul>
-                <li>Implemented both the classical Vallado 4-frame method and the IAU-2006/2000A method via the SOFA C library, cross-validated to sub-0.01° accuracy against Vallado's own published test cases.</li>
-                <li>Diagnosed a ~29-day periodic discrepancy between the two chains by inspecting a plot with no leads, and traced it to an omitted lunar gravitational perturbation term — the disagreement peaks exactly at quarter-moon geometry.</li>
-                <li>Designed the architecture around a self-formulated "feudal programming" pattern: every module trusts its inputs and guarantees its outputs, with all defensive validation concentrated at explicit handshake boundaries.</li>
-                <li>Built a three-tier API — C++ core, pybind11 bindings, and a Python convenience layer with automatic Earth Orientation Parameter fetching — backed by 37 passing tests in CI.</li>
-              </ul>
-            </div>
-          </div>
-          <button class="case-toggle" aria-expanded="false">Read the detail <svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></button>
-        </article>
-
-        <article class="case reveal">
-          <div class="case-top">
-            <div>
-              <h3>Active Feedback Stabilization of a Continuous Z-Pinch</h3>
-              <div class="case-when">2026 · Independent research · target publication 2028</div>
-            </div>
-            <span class="case-tag">Research</span>
-          </div>
-          <p class="case-stack">Magnetohydrodynamics · Delay-differential control theory</p>
-          <p class="case-lede">Control theory applied to keeping a column of superheated plasma where you
-            put it — under realistic sensor and actuator delay.</p>
-          <div class="case-details">
-            <div class="case-details-inner">
-              <ul>
-                <li>Derived a magnetohydrodynamic equilibrium model linking a boundary perturbation to a normalized magnetic-pressure perturbation via the Maxwell stress tensor.</li>
-                <li>Formulated a control-oriented instability model and derived a delayed-feedback amplitude equation from a Lyapunov-style energy proxy, capturing finite sensor/actuator latency.</li>
-                <li>Decomposed the resulting closed-loop characteristic equation into coupled real/imaginary stability conditions — the same class of delay-differential analysis used in real-time control-loop design.</li>
-              </ul>
-            </div>
-          </div>
-          <button class="case-toggle" aria-expanded="false">Read the detail <svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></button>
-        </article>
-
-        <article class="case reveal">
-          <div class="case-top">
-            <div>
-              <h3>Real-Time Market Simulator</h3>
-              <div class="case-when">ECE243 — Advanced Embedded Systems</div>
-            </div>
-            <span class="case-tag">Embedded</span>
-          </div>
-          <p class="case-stack">Bare-metal C · RISC-V (Nios V) · Intel DE1-SoC FPGA</p>
-          <p class="case-lede">Stochastic calculus, running on a chip with no operating system and no math
-            library.</p>
-          <div class="case-details">
-            <div class="case-details-inner">
-              <ul>
-                <li>Derived a discrete-time geometric Brownian motion pricing engine from the continuous-time Itô SDE, and implemented <code>sqrt</code>, <code>log</code>, <code>exp</code>, <code>sin</code>, and <code>cos</code> from first principles for a target with no <code>libm</code>.</li>
-                <li>Designed an interrupt-driven, no-OS architecture: a hardware-timer ISR drives price ticks, a KEY-button ISR handles order entry, all synchronized through <code>volatile</code> shared state.</li>
-                <li>Found and fixed five quantified defects, including a Taylor-series early-exit bug that introduced systematic upward price drift, and a signed left-shift undefined-behavior bug in the exponential's range reduction.</li>
-                <li>Owned the full math/processing engine end-to-end while a partner owned the VGA rendering — praised in the course demo for explaining Itô-calculus concepts clearly to a non-specialist audience.</li>
-              </ul>
-            </div>
-          </div>
-          <button class="case-toggle" aria-expanded="false">Read the detail <svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></button>
-        </article>
-
-        <article class="case reveal">
-          <div class="case-top">
-            <div>
-              <h3>14 MHz Push-Pull RF Power Amplifier</h3>
-              <div class="case-when">ECE295 · Team Lead, RF Subsystem</div>
-            </div>
-            <span class="case-tag">Analog RF</span>
-          </div>
-          <p class="case-stack">MATLAB · Analog circuit design</p>
-          <p class="case-lede">While most of the class went digital, this team built a fully analog
-            transmitter — deliberately, for the redundancy it buys.</p>
-          <div class="case-details">
-            <div class="case-details-inner">
-              <ul>
-                <li>Selected a push-pull Class AB/B architecture (2N3904/2N2222 pre-amp driving IRF510 MOSFETs) over a digital approach, trading complexity for flux cancellation and even-harmonic suppression.</li>
-                <li>Built a full MATLAB simulation suite — DC bias, small-signal AC and noise, transient (ODE45), and PCB-parasitic analysis — across the pre-amp, power amp, and cascaded chain.</li>
-                <li>Documented critical failure modes ahead of hardware bring-up: thermal runaway from the IRF510's negative Vgs(th) temperature coefficient, drain overvoltage from transformer leakage inductance, and VHF parasitic oscillation — each with a quantified mitigation.</li>
-                <li>Kept the team's simulation and verification documentation current through deadlines, and diagnosed real hardware failures (a broken power-switch IC, a damaged PCB trace) separately from the failure modes the simulation had already predicted.</li>
-              </ul>
-            </div>
-          </div>
-          <button class="case-toggle" aria-expanded="false">Read the detail <svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></button>
-        </article>
-
-        <article class="case reveal">
-          <div class="case-top">
-            <div>
-              <h3>FPGA Pong</h3>
-              <div class="case-when">ECE241 · with Ava Haji Hosseinali</div>
-            </div>
-            <span class="case-tag">Digital Logic</span>
-          </div>
-          <p class="case-stack">Verilog RTL · Intel DE1-SoC FPGA</p>
-          <p class="case-lede">Pong, built entirely out of clocked digital logic — no CPU, no software,
-            just finite state machines.</p>
-          <div class="case-details">
-            <div class="case-details-inner">
-              <ul>
-                <li>Designed an 8-state FSM governing paddle draw/erase/move behavior, gated to a once-per-frame timing reference derived from a single D-flip-flop edge detector on VGA vertical sync.</li>
-                <li>Implemented a two-stage flip-flop synchronizer and counter-based debounce circuit to bring noisy mechanical pushbutton input cleanly into the clock domain.</li>
-                <li>Traced a rendering bug — erase-then-redraw sprites occasionally wiping the static background — to the lack of a frame buffer, and documented it plainly rather than hiding it: clearing the whole screen became the win condition.</li>
-              </ul>
-            </div>
-          </div>
-          <button class="case-toggle" aria-expanded="false">Read the detail <svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></button>
-        </article>
-
-        <article class="case reveal">
-          <div class="case-top">
-            <div>
-              <h3>AlphaMax</h3>
-              <div class="case-when">2025 · Independent research</div>
-            </div>
-            <span class="case-tag">Agentic Systems</span>
-          </div>
-          <p class="case-stack">Python · SEC EDGAR API · Agentic LLM tooling</p>
-          <p class="case-lede">Where "feudal programming" actually came from — a research vehicle for
-            minimizing LLM context usage, not a trading product.</p>
-          <div class="case-details">
-            <div class="case-details-inner">
-              <ul>
-                <li>Built a local, never-deployed financial-analysis agent with a custom SEC EDGAR API client to study context-minimization strategies for agentic pipelines, around the CISCO/AGNTCY Open Agent Schema Framework release.</li>
-                <li>Formulated the "feudal programming" module pattern here first — modules trust validated inputs and guarantee validated outputs, with all paranoid checking concentrated at handshake layers — specifically so an LLM agent only needs a short docstring contract, not the module internals.</li>
-                <li>Reused and refined the same pattern, unprompted, as SpaceNet's core architecture a year later — evidence it's a durable habit, not a one-off idea.</li>
-              </ul>
-            </div>
-          </div>
-          <button class="case-toggle" aria-expanded="false">Read the detail <svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></button>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <section class="on-console skills" id="skills">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">Systems check</p>
-        <h2>What I actually work with</h2>
-      </div>
-      <div class="skill-groups">
-        <div class="skill-group reveal">
-          <h4>Languages</h4>
-          <div class="chip-row">
-            <span class="chip">C</span><span class="chip">C++</span><span class="chip">Python</span>
-            <span class="chip">MATLAB</span><span class="chip">Verilog (RTL/HDL)</span><span class="chip">RISC-V asm</span>
-          </div>
-        </div>
-        <div class="skill-group reveal">
-          <h4>Domains</h4>
-          <div class="chip-row">
-            <span class="chip">Astrodynamics</span><span class="chip">Real-time embedded</span>
-            <span class="chip">Digital logic / FSM</span><span class="chip">Analog RF</span>
-            <span class="chip">Control theory</span><span class="chip">Numerical methods</span>
-          </div>
-        </div>
-        <div class="skill-group reveal">
-          <h4>Tools</h4>
-          <div class="chip-row">
-            <span class="chip">pybind11</span><span class="chip">CMake</span><span class="chip">pytest</span>
-            <span class="chip">GoogleTest</span><span class="chip">GitHub Actions</span><span class="chip">Git</span>
-            <span class="chip">Quartus</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="on-console contact" id="contact">
-    <div class="wrap reveal">
-      <p class="eyebrow" style="justify-content:center;">Get in touch</p>
-      <p style="margin-top:16px;">Open to GNC and flight-software co-op roles, and happy to talk through any of the projects above in more depth than a web page allows.</p>
-      <div class="contact-actions">
-        <button class="btn btn-primary" id="copyEmail">Copy email</button>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/mahat-joshi/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn btn-ghost" href="https://github.com/MahatPhy" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn btn-ghost" href="./resume.pdf">Résumé (PDF)</a>
-      </div>
-      <div class="copy-note" id="copyNote" aria-live="polite"></div>
-    </div>
-  </section>
-
-</main>
-
-<footer class="on-console">
-  <div class="wrap foot-row">
-    <p>© <span id="year"></span> Mahat Joshi. Built by hand, checked twice.</p>
-    <div class="foot-links">
-      <a href="mailto:mahat.joshi@mail.utoronto.ca">Email</a>
-      <a href="https://www.linkedin.com/in/mahat-joshi/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://github.com/MahatPhy" target="_blank" rel="noopener">GitHub</a>
+    <div class="col">
+      <p>I grew up fascinated by aircraft and spacecraft — model warthogs, star charts, and eventually NASA-SP documents from the X-15 and Gemini era. That turned into giving impromptu space lectures in high school and, at university, joining UTAT Rocketry.</p>
+      <p>In February 2026 I started working with <strong>Khang Nguyen</strong>, a control systems engineer at Kepler Communications, on an astrodynamics project called <strong>Spacenet</strong>. It's the thing that pulled me firmly toward Guidance, Navigation, and Control — I switched my course selections toward it and haven't looked back.</p>
+      <p>I'm a 3rd-degree black belt in Karate, certified under the Indian Martial Arts Federation, and spent five years teaching self-defense and coordinating training for camps of several hundred students. I'm also a third-year Hindustani classical singer. Neither has much to do with orbital mechanics, but both taught me a lot about repetition, precision, and doing the unglamorous parts of practice.</p>
     </div>
   </div>
+</section>
+
+<section id="spacenet">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">Currently building</h2>
+      <span class="section-tag">May 2026 — present</span>
+    </div>
+    <div class="feature-card">
+      <h3>Spacenet</h3>
+      <p class="feature-stack">C++ · Python (pybind11) · SOFA · CMake · GitHub Actions</p>
+      <p>An astrodynamics library that computes a satellite's sun vector and, in the current iteration, its local magnetic field vector — the reference directions GNC software needs for pointing and attitude determination. Built under the mentorship of a control systems engineer, with an emphasis on independently cross-checked, tested numerical code rather than a single trusted implementation.</p>
+      <p>The sun vector is computed two separate ways — Vallado's classical four-frame rotation chain (precession, nutation, sidereal time, polar motion) and IAU-2006/2000A via the SOFA library — and checked against each other rather than assumed correct. A ~29-day periodic disagreement between the two chains turned out to trace back to an omitted lunar perturbation term, confirmed by lining the discrepancy up against the lunar month.</p>
+
+      <div class="metric-row">
+        <div class="metric"><span class="num">&lt;0.01°</span><span class="lbl">Vallado vs. SOFA agreement</span></div>
+        <div class="metric"><span class="num">4–40 µs</span><span class="lbl">per reference-vector call</span></div>
+        <div class="metric"><span class="num">37+</span><span class="lbl">automated tests, CI on every push</span></div>
+        <div class="metric"><span class="num">3</span><span class="lbl">tiers: C++ core → bindings → Python</span></div>
+      </div>
+
+      <p>The iteration in progress adds IGRF-14 geomagnetic field evaluation — Schmidt-normalized associated Legendre polynomials, Gauss-coefficient conversion, and a dirty-flag caching model that only recomputes each tier (epoch, colatitude, vector) when its own inputs actually change — plus SGP4 orbit propagation to drive both vectors along a real satellite ground track.</p>
+
+      <div class="feature-links">
+        <a class="text-link" href="https://github.com/MahatPhy">Source on GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">Other projects</h2>
+      <span class="section-tag">coursework &amp; independent</span>
+    </div>
+    <div class="proj-grid">
+      <article class="proj-card">
+        <h3>Real-Time Market Simulator</h3>
+        <p class="proj-meta">ECE243 · bare-metal C · RISC-V (Nios V) · DE1-SoC</p>
+        <p>An interactive stock simulator running with no OS on an FPGA soft processor: a Geometric Brownian Motion pricing engine driven off a 4 Hz timer ISR, live VGA charting, and portfolio tracking across HEX displays, LEDs, and a character buffer.</p>
+      </article>
+      <article class="proj-card">
+        <h3>14 MHz RF Power Amplifier</h3>
+        <p class="proj-meta">ECE295 · team lead, RF subsystem · MATLAB</p>
+        <p>Led a Class A/AB push-pull amplifier design to 30× voltage gain. Wrote a 200-page simulation and failure-analysis report — thermal runaway, drain overvoltage, VHF oscillation — derived from first principles before any hardware bring-up.</p>
+      </article>
+      <article class="proj-card">
+        <h3>FPGA Pong</h3>
+        <p class="proj-meta">ECE241 · Verilog RTL · DE1-SoC</p>
+        <p>An 8-state FSM governing paddle motion and game logic, synchronized to VGA frame timing via edge detection, with a two-stage synchronizer and debounce circuit for clean pushbutton input.</p>
+      </article>
+      <article class="proj-card">
+        <h3>Active Z-Pinch Stabilization</h3>
+        <p class="proj-meta">Independent research · MATLAB · delay-differential analysis</p>
+        <p>An MHD equilibrium model with a delayed-feedback amplitude equation for plasma boundary stability under realistic sensor/actuator latency, extending the non-linear instability growth window roughly 4×.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">Skills</h2>
+      <span class="section-tag">languages &amp; tools</span>
+    </div>
+    <div class="spec-sheet">
+      <div class="spec-row">
+        <div class="spec-key">languages</div>
+        <div class="spec-val">C++<span class="sep">·</span>C<span class="sep">·</span>Python<span class="sep">·</span>MATLAB<span class="sep">·</span>RISC-V &amp; ARM assembly<span class="sep">·</span>Rust (learning)</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">domains</div>
+        <div class="spec-val">Astrodynamics<span class="sep">·</span>control systems<span class="sep">·</span>real-time embedded systems<span class="sep">·</span>digital logic &amp; FSM design<span class="sep">·</span>numerical methods</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">tools</div>
+        <div class="spec-val">Git / GitHub Actions<span class="sep">·</span>Docker<span class="sep">·</span>CMake<span class="sep">·</span>pybind11<span class="sep">·</span>pytest / GoogleTest<span class="sep">·</span>LaTeX / KaTeX</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">coursework</div>
+        <div class="spec-val">Control Systems<span class="sep">·</span>Robot Modelling &amp; Control<span class="sep">·</span>Operating Systems<span class="sep">·</span>Matrix Algebra &amp; Optimization<span class="sep">·</span>Computer Security</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">languages spoken</div>
+        <div class="spec-val">English<span class="sep">·</span>Hindi<span class="sep">·</span>German &amp; French (working knowledge)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resume">
+  <div class="wrap">
+    <div>
+      <h2 class="section-title">Résumé</h2>
+      <p>One page, GNC-focused, updated September 2026.</p>
+    </div>
+    <a class="btn" href="files/mahat-joshi-resume.pdf">Download PDF</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="footer-note">Toronto, ON</span>
+    <ul class="footer-links">
+      <li><a href="mailto:mahat.joshi@mail.utoronto.ca">Email</a></li>
+      <li><a href="https://github.com/MahatPhy">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/mahat-joshi/">LinkedIn</a></li>
+    </ul>
+  </div>
 </footer>
-
-<script>
-(function(){
-  "use strict";
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  try { document.getElementById('year').textContent = new Date().getFullYear(); } catch(e){}
-
-  try {
-    var navToggle = document.getElementById('navToggle');
-    var navLinks = document.getElementById('navLinks');
-    navToggle.addEventListener('click', function(){
-      var open = navLinks.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    navLinks.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(){
-        navLinks.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  } catch(e){}
-
-  try {
-    var sections = document.querySelectorAll('main section[id]');
-    var navA = document.querySelectorAll('.nav-links a[data-section]');
-    if('IntersectionObserver' in window){
-      var navObserver = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if(entry.isIntersecting){
-            var id = entry.target.getAttribute('id');
-            navA.forEach(function(a){
-              a.classList.toggle('active', a.getAttribute('href') === '#' + id);
-            });
-          }
-        });
-      }, { rootMargin: '-45% 0px -50% 0px' });
-      sections.forEach(function(s){ navObserver.observe(s); });
-    }
-  } catch(e){}
-
-  var revealEls = document.querySelectorAll('.reveal');
-  try {
-    if('IntersectionObserver' in window && !reduceMotion){
-      var revealObserver = new IntersectionObserver(function(entries, obs){
-        entries.forEach(function(entry){
-          if(entry.isIntersecting){
-            entry.target.classList.add('in');
-            obs.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      revealEls.forEach(function(el){ revealObserver.observe(el); });
-    } else {
-      revealEls.forEach(function(el){ el.classList.add('in'); });
-    }
-  } catch(e){
-    revealEls.forEach(function(el){ el.classList.add('in'); });
-  }
-  window.addEventListener('load', function(){
-    setTimeout(function(){
-      revealEls.forEach(function(el){ el.classList.add('in'); });
-    }, 2000);
-  });
-
-  try {
-    document.querySelectorAll('.case-toggle').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        var details = btn.closest('.case').querySelector('.case-details');
-        var open = details.classList.toggle('open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        btn.firstChild.textContent = open ? 'Hide the detail ' : 'Read the detail ';
-      });
-    });
-  } catch(e){}
-
-  try {
-    var aboutSection = document.querySelector('.about-scroll');
-    var rocketSvg = document.getElementById('aboutRocket');
-    if(aboutSection && rocketSvg && window.innerWidth > 840){
-      var stageIds = ['s-ic','s-ii','s-ivb','iu','sla','sm','cm','les'];
-      var drawEls = rocketSvg.querySelectorAll('.stage-outline.draw');
-
-      if(!reduceMotion){
-        drawEls.forEach(function(p){
-          var len = p.getTotalLength();
-          p.setAttribute('data-len', len);
-          p.style.strokeDasharray = len;
-          p.style.strokeDashoffset = len;
-          p.style.opacity = 0.3;
-        });
-
-        var clamp01 = function(n){ return Math.max(0, Math.min(1, n)); };
-
-        var setStageLocal = function(stageEl, local){
-          var outlines = stageEl.querySelectorAll('.stage-outline');
-          outlines.forEach(function(p){
-            var len = parseFloat(p.getAttribute('data-len')) || 0;
-            p.style.strokeDashoffset = len * (1 - local);
-            p.style.opacity = 0.3 + local * 0.7;
-          });
-          var fills = stageEl.querySelectorAll('.stage-fill');
-          fills.forEach(function(p){ p.style.opacity = local * 0.07; });
-        };
-
-        var applyProgress = function(progress){
-          var n = stageIds.length;
-          stageIds.forEach(function(id, i){
-            var bandStart = i / n, bandEnd = (i + 1) / n;
-            var local = clamp01((progress - bandStart) / (bandEnd - bandStart));
-            var stageEl = rocketSvg.querySelector('.stage[data-stage="' + id + '"]');
-            if(stageEl) setStageLocal(stageEl, local);
-            var engineGroup = rocketSvg.querySelector('.engines[data-engines="' + id + '"]');
-            if(engineGroup){
-              engineGroup.querySelectorAll('.engine').forEach(function(en){
-                en.style.opacity = local * 0.6;
-              });
-            }
-          });
-          var slaIdx = stageIds.indexOf('sla');
-          var slaLocal = clamp01((progress - slaIdx / n) / (1 / n));
-          var lm = rocketSvg.querySelector('.lm-glyph');
-          if(lm) lm.style.opacity = slaLocal * 0.75;
-        };
-
-        var ticking = false;
-        var updateFromScroll = function(){
-          ticking = false;
-          try {
-            var rect = aboutSection.getBoundingClientRect();
-            var vh = window.innerHeight;
-            var total = rect.height - vh;
-            var scrolled = -rect.top;
-            var progress = total > 0 ? clamp01(scrolled / total) : 0;
-            applyProgress(progress);
-          } catch(e){}
-        };
-        var onScroll = function(){
-          if(!ticking){ ticking = true; requestAnimationFrame(updateFromScroll); }
-        };
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll);
-        updateFromScroll();
-      } else {
-        drawEls.forEach(function(p){ p.style.opacity = 1; p.style.strokeDashoffset = 0; });
-        rocketSvg.querySelectorAll('.stage-fill').forEach(function(p){ p.style.opacity = 0.07; });
-        rocketSvg.querySelectorAll('.engine').forEach(function(p){ p.style.opacity = 0.6; });
-        var lmStatic = rocketSvg.querySelector('.lm-glyph');
-        if(lmStatic) lmStatic.style.opacity = 0.75;
-      }
-    }
-  } catch(e){}
-
-  try {
-    var starfield = document.getElementById('starfield');
-    if(starfield){
-      var n = window.innerWidth < 700 ? 35 : 70;
-      for(var i=0;i<n;i++){
-        var s = document.createElement('span');
-        s.style.top = Math.random()*100 + '%';
-        s.style.left = Math.random()*100 + '%';
-        s.style.animationDelay = (Math.random()*4.5) + 's';
-        s.style.opacity = (Math.random()*0.5 + 0.15).toFixed(2);
-        starfield.appendChild(s);
-      }
-    }
-  } catch(e){}
-
-  try {
-    var copyBtn = document.getElementById('copyEmail');
-    var copyNote = document.getElementById('copyNote');
-    if(copyBtn){
-      copyBtn.addEventListener('click', function(){
-        var email = 'mahat.joshi@mail.utoronto.ca';
-        function fallback(){
-          window.location.href = 'mailto:' + email;
-        }
-        if(navigator.clipboard && window.isSecureContext){
-          navigator.clipboard.writeText(email).then(function(){
-            copyNote.textContent = 'Copied ' + email + ' to your clipboard.';
-            setTimeout(function(){ copyNote.textContent=''; }, 3200);
-          }).catch(fallback);
-        } else {
-          fallback();
-        }
-      });
-    }
-  } catch(e){}
-})();
-</script>
 
 </body>
 </html>
